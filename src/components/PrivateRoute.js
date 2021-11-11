@@ -1,14 +1,14 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { Redirect, Route } from 'react-router';
 
-const PrivateRoute = ({ childres, ...routeProps }) => {
+const PrivateRoute = ({ children, ...routeProps }) => {
   const profile = false;
 
   if (!profile) {
     return <Redirect to="/signin" />;
   }
 
-  return <Route {...routeProps}>{Children}</Route>;
+  return <Route {...routeProps}>{children}</Route>;
 };
 
 export default PrivateRoute;

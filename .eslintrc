@@ -19,6 +19,7 @@
     "arrow-body-style": [0],
     "prefer-arrow-callback": [0],
     "no-unused-vars": [0],
-    "react/self-closing-comp": "off"
+    "react/self-closing-comp": "off",
+    "import/no-duplicates": [0]
   }
 }
