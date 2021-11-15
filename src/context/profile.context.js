@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { auth, database } from '../misc/firebase';
 
@@ -14,7 +15,8 @@ export const ProfileProvider = ({ children }) => {
       if (authObj) {
         userRef = database.ref(`/profiles/${authObj.uid}`);
         userRef.on('value', snap => {
-          const { name, createdAt } = snap.val();
+          let { name, createdAt } = snap.val();
+          if (name === null) name = 'User';
           const user = {
             name,
             createdAt,
