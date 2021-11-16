@@ -14,12 +14,15 @@ export const ProfileProvider = ({ children }) => {
     const authUnsubscribe = auth.onAuthStateChanged(authObj => {
       if (authObj) {
         userRef = database.ref(`/profiles/${authObj.uid}`);
+
         userRef.on('value', snap => {
-          let { name, createdAt } = snap.val();
+          let { name, createdAt, avatar } = snap.val();
+
           if (name === null) name = 'User';
           const user = {
             name,
             createdAt,
+            avatar,
             uid: authObj.uid,
             email: authObj.email,
           };
