@@ -3,7 +3,7 @@ import { Button, Modal } from 'rsuite';
 import { useModalState } from '../../../misc/custom-hooks';
 import AvatarProfile from '../../dashboard/AvatarProfile';
 
-const ProfileInfoBtnModal = ({ profile, ...btnProps }) => {
+const ProfileInfoBtnModal = ({ profile, children, ...btnProps }) => {
   const { isOpen, open, close } = useModalState();
   const { name, avatar, createdAt } = profile;
 
@@ -31,7 +31,10 @@ const ProfileInfoBtnModal = ({ profile, ...btnProps }) => {
           <p>Member since {memberSince}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={close}>Close</Button>
+          {children}
+          <Button block onClick={close}>
+            Close
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
