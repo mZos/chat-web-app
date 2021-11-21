@@ -12,7 +12,7 @@ import {
   Schema,
 } from 'rsuite';
 import { useModalState } from '../../misc/custom-hooks';
-import { database } from '../../misc/firebase';
+import { auth, database } from '../../misc/firebase';
 
 const { StringType } = Schema.Types;
 const model = Schema.Model({
@@ -46,6 +46,9 @@ const CreateRoomModalbtn = () => {
     const newRoomData = {
       ...formValue,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
+      admins: {
+        [auth.currentUser.uid]: true,
+      },
     };
 
     try {
