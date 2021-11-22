@@ -21,6 +21,7 @@ const AttachmentBtnModal = ({ afterUpload }) => {
   };
 
   const onUpload = async () => {
+    setIsLoading(true);
     try {
       const uploadPromises = fileList.map(file => {
         return storage
@@ -48,6 +49,7 @@ const AttachmentBtnModal = ({ afterUpload }) => {
       setIsLoading(false);
       close();
     } catch (error) {
+      setIsLoading(false);
       Alert.error(error.message, 4000);
     }
   };
@@ -76,7 +78,7 @@ const AttachmentBtnModal = ({ afterUpload }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button block disabled={isLoading} onClick={onUpload}>
-            Send to chat
+            {isLoading ? 'Uploading...' : 'Send to chat'}
           </Button>
           <div className="text-right mt-2">
             <small>* only files less than 5 mb are allowed</small>
