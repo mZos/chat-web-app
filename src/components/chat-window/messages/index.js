@@ -26,6 +26,8 @@ const Messages = () => {
 
   const loadMessages = useCallback(
     limitToLast => {
+      const node = selfRef.current;
+
       messageRef.off();
 
       messageRef
@@ -36,7 +38,6 @@ const Messages = () => {
           const data = transformToArrWithId(snap.val());
           setMessages(data);
 
-          const node = selfRef.current;
           if (shouldScrollToBottom(node)) {
             node.scrollTop = node.scrollHeight;
           }
