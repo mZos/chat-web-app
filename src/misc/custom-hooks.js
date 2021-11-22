@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { database } from './firebase';
 
@@ -62,14 +61,14 @@ export function useHover() {
       if (node) {
         node.addEventListener('mouseover', handleMouseOver);
         node.addEventListener('mouseout', handleMouseOut);
-
-        return () => {
-          node.removeEventListener('mouseover', handleMouseOver);
-          node.removeEventListener('mouseout', handleMouseOut);
-        };
       }
+      return () => {
+        node.removeEventListener('mouseover', handleMouseOver);
+        node.removeEventListener('mouseout', handleMouseOut);
+      };
     },
-    [] // Recall only if ref changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ref.current] // Recall only if ref changes
   );
 
   return [ref, value];
