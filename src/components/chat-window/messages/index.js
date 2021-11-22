@@ -78,12 +78,44 @@ const Messages = () => {
           alterMsg = 'Liked message';
         }
       }
-
       return msg;
     });
 
     Alert.info(alterMsg, 4000);
   }, []);
+
+  const handleDeleteMsg = useCallback(
+    async msgId => {
+      // eslint-disable-next-line no-alert
+      if (!window.confirm('Delete this message?')) return;
+
+      const isLastMsg = messages[messages.length - 1].id === msgId;
+
+      const updates = {};
+
+      updates[`/messages/${msgId}`] = null;
+
+      if (isLastMsg && messages.length > 1) {
+        updates[`/rooms/${chatId}/lastMessage`] = {
+          ...messages[messages.length - 2],
+          msgId: messages[messages.length - 2].id,
+        };
+      }
+
+      if (isLastMsg && messages.length === 1) {
+        updates[`/rooms/${chatId}/lastMessage`] = null;
+      }
+
+      try {
+        await database.ref().update(updates);
+
+        Alert.info('Message has been deleted', 4000);
+      } catch (error) {
+        Alert.error(error.message, 4000);
+      }
+    },
+    [chatId, messages]
+  );
 
   return (
     <ul className="msg-list custom-scroll">
@@ -95,6 +127,7 @@ const Messages = () => {
             message={msg}
             handleAdmin={handleAdmin}
             handleLikes={handleLikes}
+            handleDeleteMsg={handleDeleteMsg}
           />
         ))}
     </ul>
